@@ -14,9 +14,11 @@ jobs:
             - uses: nearform-actions/github-action-check-linked-issues@v1
               id: check-linked-issues
               with:
-                exclude-branches: "release/**, dependabot/**"
-                custom-body-comment: "@${{ github.event.pull_request.user.login }} Please link this pull request to an issue or add the no-issue label and manually rerun the failed workflow."
+                exclude-branches: "release/**, dependabot/**, main, release-v**"
+                custom-body-comment: "@${{ github.event.pull_request.user.login }} Please link this pull request to an issue in the description or sidebar and rerun the failed workflow. Alternatively you can add the no-issue label."
 
-            # OPTIONAL: Use the output from the `check-linked-issues` step
-            - name: Get the output
-              run: echo "How many linked issues? ${{ steps.check-linked-issues.outputs.linked_issues_count }}"
+            - name: Get issue count
+              run: echo "${{ steps.check-linked-issues.outputs.linked_issues_count }} linked issue(s) to this pull request"
+
+            - name: List connected issues
+              run: echo ${{ steps.check-linked-issues.outputs.issues }}
