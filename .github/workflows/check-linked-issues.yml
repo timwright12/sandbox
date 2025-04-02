@@ -15,7 +15,7 @@ jobs:
               id: check-linked-issues
               with:
                 exclude-branches: "release/**, dependabot/**"
-                custom-body-comment: "${{ github.event.pull_request.user.login }} Please link this pull request to an issue or add the no-issue label and manually rerun the failed workflow."
+                custom-body-comment: "@${{ github.event.pull_request.user.login }} Please link this pull request to an issue or add the no-issue label and manually rerun the failed workflow."
 
         # OPTIONAL: Use the output from the `check-linked-issues` step
             - name: Get the output
