@@ -1,6 +1,6 @@
 name: "[Admin] Check for linked issues in PRs"
 on:
-    pull_request_target:
+    pull_request:
       types: [opened, edited, reopened, synchronize]
 
 jobs:
@@ -20,4 +20,3 @@ jobs:
         # OPTIONAL: Use the output from the `check-linked-issues` step
             - name: Get the output
               run: echo "How many linked issues? ${{ steps.check-linked-issues.outputs.linked_issues_count }}"
-              
