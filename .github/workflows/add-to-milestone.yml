@@ -17,4 +17,4 @@ jobs:
               if: ${{ steps.check-linked-issues.outputs.linked_issues_count }} > 1
               run: |
                 echo ${{ steps.check-linked-issues.outputs.issues }}
-                gh issue 5 --milestone v1.1.0
+                gh issue edit 5 --milestone v1.1.0
