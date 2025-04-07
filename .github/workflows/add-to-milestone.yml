@@ -12,7 +12,12 @@ jobs:
         if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         steps:
-            - uses: nearform-actions/github-action-check-linked-issues@v1
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
+            - name: issues
+              uses: nearform-actions/github-action-check-linked-issues@v1
               id: check-linked-issues
               with:
                 exclude-branches: "release/**, dependabot/**, main, release-v**"
