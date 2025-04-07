@@ -19,17 +19,32 @@ jobs:
               with:
                 fetch-depth: 0
 
-            - name: Store linked issues
-              uses: nearform-actions/github-action-check-linked-issues@v1
-              id: check-linked-issues
+            - name: Find linked issues
+              id: find-linked-issues
+              uses: Ismoh-Games/find-linked-issues@v1.0.6
               with:
-                exclude-branches: "release/**, dependabot/**, main, release-v**"
- 
-            - name: Update milestone
-              if: ${{ steps.check-linked-issues.outputs.linked_issues_count }} > 1
+                token: ${{ secrets.GITHUB_TOKEN }}
+                repository: ${{ github.repository }}
+                pull-request-number: ${{ github.event.pull_request.number }}
+                pull-request-body: ${{ github.event.pull_request.body }}
+                copy-issues-labels: true # optional
+                include-closed-issues: true # optional
+
+            # Use the output from the `find-linked-issues` step
+            # gh issue edit 5 --milestone v1.1.0
+            - name: Use the output
               run: |
-                thing=${{steps.check-linked-issues.outputs.issues}} 
-                echo "thing: $thing[0]"
-                echo value=${thing#*#}
-                value=${value%"]"}
-                gh issue edit $value --milestone v1.1.0
+                echo "is-pull-request-linked-to-issues: ${{ steps.find-linked-issues.outputs.is-pull-request-linked-to-issues }}"
+                echo "linked-issues: ${{ steps.find-linked-issues.outputs.linked-issues }}"
+                echo "pull-request-labels: ${{ steps.find-linked-issues.outputs.pull-request-labels }}"
+
+            - name: Conditional step
+              if: ${{ steps.find-linked-issues.outputs.is-pull-request-linked-to-issues == 'True' }}
+              run: |
+                echo "Pull request is linked to issues"
+
+            - name: Another conditional step
+              if: ${{ steps.find-linked-issues.outputs.is-pull-request-linked-to-issues == 'False' }}
+              run: |
+                exit 1
+
