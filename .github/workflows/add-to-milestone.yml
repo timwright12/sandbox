@@ -28,8 +28,8 @@ jobs:
             - name: Update milestone
               if: ${{ steps.check-linked-issues.outputs.linked_issues_count }} > 1
               run: |
-              echo ${{ steps.check-linked-issues.outputs }}  
-              echo ${{ steps.check-linked-issues.outputs.issues }}
-                for i in $( ${{ steps.check-linked-issues.outputs.issues }} ); do
-                  gh issue edit $i --milestone v1.1.0
-                done
+                echo ${{ steps.check-linked-issues.outputs }}  
+                echo ${{ steps.check-linked-issues.outputs.issues }}
+                  for i in $( ${{ steps.check-linked-issues.outputs.issues }} ); do
+                    gh issue edit $i --milestone v1.1.0
+                  done
