@@ -11,18 +11,21 @@ jobs:
     if_merged:
         if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
+        permissions:
+          issues: write
         steps:
             - name: Checkout
               uses: actions/checkout@v2
               with:
                 fetch-depth: 0
-            - name: issues
+
+            - name: Store linked issues
               uses: nearform-actions/github-action-check-linked-issues@v1
               id: check-linked-issues
               with:
                 exclude-branches: "release/**, dependabot/**, main, release-v**"
  
-            - name: Get issue count
+            - name: Update milestone
               if: ${{ steps.check-linked-issues.outputs.linked_issues_count }} > 1
               run: |
                 echo ${{ steps.check-linked-issues.outputs.issues }}
