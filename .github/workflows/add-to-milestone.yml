@@ -30,11 +30,5 @@ jobs:
               run: |
                 thing=${{steps.check-linked-issues.outputs.issues}} 
                 echo "thing: $thing"
-                  for i in $( $thing ); do
-                    gh issue edit 13 --milestone v1.1.0
-                    value=${i#*#}
-                    echo "value: $value"
-                    echo "value: $value" >> $GITHUB_ENV
-                    echo "value: $value" >> $GITHUB_OUTPUT
-                    echo $i
-                  done
+                echo value=${thing#*#}
+                gh issue edit 13 --milestone v1.1.0
