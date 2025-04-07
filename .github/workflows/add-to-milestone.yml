@@ -1,4 +1,4 @@
-name: "[Admin] Add issue to milestone"
+name: "[Admin] Add issue to milestone."
 
 env:
     GH_TOKEN: ${{ github.token }}
