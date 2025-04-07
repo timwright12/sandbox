@@ -28,9 +28,13 @@ jobs:
             - name: Update milestone
               if: ${{ steps.check-linked-issues.outputs.linked_issues_count }} > 1
               run: |
-                echo ${{ steps.check-linked-issues.outputs }} 
                 thing=${{steps.check-linked-issues.outputs.issues}} 
-                value=${thing#*#}
-                  for i in $( $value ); do
-                    gh issue edit $i --milestone v1.1.0
+                echo "thing: $thing"
+                  for i in $( $thing ); do
+                    gh issue edit 13 --milestone v1.1.0
+                    value=${i#*#}
+                    echo "value: $value"
+                    echo "value: $value" >> $GITHUB_ENV
+                    echo "value: $value" >> $GITHUB_OUTPUT
+                    echo $i
                   done
