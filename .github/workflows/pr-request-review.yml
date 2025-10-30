@@ -1,0 +1,28 @@
+name: "[Admin] Run on PR"
+
+on:
+  # Trigger on pull request events
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main # targeting main
+
+permissions:
+  contents: read
+
+jobs:
+  check_team_and_alert:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACTIONS_PAT }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Notify Slack of non mobile team member creating a PR
+        uses: ./.github/workflows/start-slack-thread.yml
+        secrets: inherit
+        with:
+          channel_name: sandbox
+          message: "Ping from github: <${{ github.event.pull_request.html_url }}|Click here to view the Pull Request>"
