@@ -1,7 +1,7 @@
 name: "[Admin] Run on PR"
 
 on:
-  # Trigger on pull request events
+  workflow_dispatch:
   pull_request:
     types:
       - opened
