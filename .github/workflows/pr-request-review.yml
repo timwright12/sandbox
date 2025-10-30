@@ -2,11 +2,11 @@ name: "[Admin] Run on PR"
 
 on:
   workflow_dispatch:
-  pull_request:
-    types:
-      - opened
-    branches:
-      - main # targeting main
+  # pull_request:
+  #   types:
+  #     - opened
+  #   branches:
+  #     - main # targeting main
 
 permissions:
   contents: read
